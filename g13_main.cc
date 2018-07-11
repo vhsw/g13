@@ -15,6 +15,7 @@
 using namespace std;
 using namespace G13;
 namespace po = boost::program_options;
+#include <boost/foreach.hpp>
 
 int main(int argc, char *argv[]) {
 
@@ -65,6 +66,6 @@ int main(int argc, char *argv[]) {
 		manager.set_log_level( manager.string_config_value( "log_level") );
 	}
 
-	manager.run();
+	return manager.run();
 }
 

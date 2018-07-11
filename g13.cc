@@ -2,7 +2,7 @@
 #include "logo.h"
 #include <fstream>
 
-#if 0
+#if 1
 #include <boost/log/sources/severity_feature.hpp>
 #include <boost/log/sources/severity_logger.hpp>
 #include <boost/log/core/core.hpp>
@@ -14,7 +14,6 @@
 #include <boost/log/expressions/formatters/stream.hpp>
 #include <boost/log/support/date_time.hpp>
 #endif
-
 using namespace std;
 
 // *************************************************************************
@@ -232,7 +231,7 @@ static std::string describe_libusb_error_code(int code) {
 			(ERROR_NO_DEVICE)(ERROR_NOT_FOUND)(ERROR_BUSY)
 			(ERROR_TIMEOUT)(ERROR_OVERFLOW)(ERROR_PIPE)
 			(ERROR_INTERRUPTED)(ERROR_NO_MEM)(ERROR_NOT_SUPPORTED)
-			(ERROR_OTHER))
+			(ERROR_OTHER));
 
 	}
 	return "unknown error";
@@ -747,7 +746,7 @@ int G13_Manager::run() {
 		return 1;
 	}
 
-	libusb_set_debug(ctx, 3);
+	libusb_set_option(ctx, LIBUSB_OPTION_LOG_LEVEL);
 	cnt = libusb_get_device_list(ctx, &devs);
 	if (cnt < 0) {
 		G13_LOG( error, "Error while getting device list" );
@@ -788,7 +787,9 @@ int G13_Manager::run() {
 			}
 	} while (running);
 	cleanup();
+	return 0;
 }
-} // namespace G13
+}
+
 
 
