@@ -1,15 +1,23 @@
 #!/usr/bin/python2.7
+'''
+Simple test script to update G13 LCD with temperature values from lm-sensors
+
+'''
+
 import subprocess, re, os, time
 
-# simple test script to update G13 LCD with temperature values from lm-sensors
-
-def doCmd( *cmd ):
-    #print( "cmd = %r" % (cmd,) )
-    p = subprocess.Popen( cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE )
-    out, err = p.communicate()
-    return out #, err
+def doCmd( cmd ):
+    try:
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, _ = p.communicate()
+    except Exception as e:
+        print 'Cannot run sensors. Chech if lm-sensors is installed.'
+        print e
+        exit(1)
+    return out
 
 def get_sensors():
+
     sensor_lines = doCmd( 'sensors' ).split('\n')
     print( "sensor_lines = %r" % (sensor_lines,) )
     temp_re = re.compile( r'''([a-zA-Z])[a-zA-Z s]+([0-9])\:\s*\+([0-9.]+)[\xc2\xb0C]*C.*''' )
@@ -35,7 +43,9 @@ def main():
     while 1:
         get_sensors()
         time.sleep(1.0)
-    
-main()
+
+
+if __name__ == "__main__":
+    main()
 
 

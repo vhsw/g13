@@ -16,7 +16,6 @@
 #include <fstream>
 #include <linux/uinput.h>
 #include <fcntl.h>
-#include <boost/log/trivial.hpp>
 
 // *************************************************************************
 
