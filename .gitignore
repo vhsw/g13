@@ -7,4 +7,5 @@ pbm2lpbm
 .settings/*
 .vscode/
 boost_1_67_0/
-build
+build/*
+!build/.keep
